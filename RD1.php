@@ -106,32 +106,19 @@
                 }
                 refresh(location);
                 //save data to DB
-                // for(let i=0;i<location.length;i++){
-                //     // $.ajax({
-                //     //     url:"testxml.php",
-                //     //     type:"post",
-                //     //     data:{"json":location[i]},
-                //     //     success:function(){
-                //     //         //document.location.href="testxml.php";
-                //     //     },
-                //     //     error:function(){
-                //     //     }
-
-                //     // })
-                //     for(let j=0;j<location[i]["weatherElement"].length;j++){
-                //         $.ajax({
-                //         url:"testxml.php",
-                //         type:"post",
-                //         data:{"json":location[i]["weatherElement"]},
-                //         success:function(){
-                //             document.location.href="testxml.php";
-                //         },
-                //         error:function(){
-                //         }
-
-                //     })
-                //     }
-                // }
+                for(let i=0;i<location.length;i++){
+                    $.ajax({
+                        url:"DB.php",
+                        type:"post",
+                        data:{"json":location[i]},
+                        success:function(){
+                            //document.location.href="testxml.php";
+                        },
+                        error:function(){
+                            alert("Error");
+                        }
+                    });
+                }    
                 
                 $( "#selectime" ).change(function() {
                     var location=jsonurl["records"]["locations"][0]["location"]; 
