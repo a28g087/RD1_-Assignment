@@ -138,11 +138,25 @@
                     url:"https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0002-001?Authorization=CWB-77A32A88-7BED-4DC6-805A-E3A2CBEBA227&format=JSON",
                     type:"GET",
                     success:function(jsonurl_rain){
+                        
                         var location=jsonurl_rain["records"]["location"];
                         var weather_test=location[0]["weatherElement"];
                         var parameter_test=location[0]["parameter"];
                         var locationName=$('#locationName').val();
-                        //console.log(location[0]["parameter"][0]["parameterValue"]);
+                        for(let i=0;i<location.length;i++){
+                            $.ajax({
+                                url:"rainDB.php",
+                                type:"post",
+                                data:{"jsonurl_rain":location[i]},
+                                success:function(){
+                                    //document.location.href="rainDB.php";
+                                },
+                                error:function(){
+                                    alert("Error");
+                                }
+                            });
+                        }
+                        console.log(jsonurl_rain);
                         var location_obs=new Array();
                         var arr_i=0;
                         for(let i=0;i<location.length;i++){
