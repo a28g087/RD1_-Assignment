@@ -88,24 +88,26 @@
                 // ," ",$weatherElement["WS"]," ",$weatherElement["Wx"]," ",$weatherElement["WeatherDescription"]
                 // ," ",$weatherElement["WD"],"<br>";
                 //var_dump($weatherElement);
-                $sql=sprintf("SELECT * FROM Weather 
-                                WHERE locationName='%s' AND startTime='%s'",$locationName,$startTime);
-                $result=query($sql);
-                if(mysqli_num_rows($result)>0){
+                $sql=sprintf("SELECT * FROM Weather WHERE locationName='%s' AND startTime='%s'",$locationName,$startTime);
+                //echo $sql,"<br>";
+                $result=$db_link->query($sql);
+                echo $result->num_rows,"<br>";
+                if($result->num_rows>0){
                     $sql=sprintf("UPDATE Weather SET 
-                        locationName='%s',startTime='%s',endTime='%s',PoP12h='%s',
-                        T='%s',MaxT='%s',MinT='%s',MaxAT='%s',MinAT='%s',Td='%s',UVI='%s',RH='%s',MaxCI='%s',
-                        MinCI='%s',WS='%s',Wx='%s',WeatherDescription='%s',WD='%s'",
-                        $locationName,$startTime,$endTime,$weatherElement["PoP12h"],
-                        $weatherElement["T"],$weatherElement["MaxT"],$weatherElement["MinT"],
+                        PoP12h='%s',T='%s',MaxT='%s',MinT='%s',
+                        MaxAT='%s',MinAT='%s',Td='%s',UVI='%s',RH='%s',MaxCI='%s',
+                        MinCI='%s',WS='%s',Wx='%s',WeatherDescription='%s',WD='%s' 
+                        WHERE locationName='%s' AND startTime='%s' AND endTime='%s'",
+                        $weatherElement["PoP12h"],$weatherElement["T"],$weatherElement["MaxT"],$weatherElement["MinT"],
                         $weatherElement["MaxAT"],$weatherElement["MinAT"],$weatherElement["Td"],
                         $weatherElement["UVI"],$weatherElement["RH"],$weatherElement["MaxCI"],
                         $weatherElement["MinCI"],$weatherElement["WS"],$weatherElement["Wx"],
-                        $weatherElement["WeatherDescription"],$weatherElement["WD"]);
+                        $weatherElement["WeatherDescription"],$weatherElement["WD"],
+                        $locationName,$startTime,$endTime,);
                     //echo $sql."<br>";
                     $db_link->query($sql);
                 }
-                elseif(mysqli_num_rows($result)==0){
+                elseif($result->num_rows==0){
                     $sql=sprintf("INSERT INTO Weather VALUES(
                         '%s','%s','%s','%s',
                         '%s','%s','%s','%s','%s','%s','%s','%s','%s',

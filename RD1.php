@@ -112,7 +112,7 @@
                         type:"post",
                         data:{"json":location[i]},
                         success:function(){
-                            //document.location.href="testxml.php";
+                            //document.location.href="DB.php";
                         },
                         error:function(){
                             alert("Error");
@@ -138,6 +138,17 @@
                     url:"https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0002-001?Authorization=CWB-77A32A88-7BED-4DC6-805A-E3A2CBEBA227&format=JSON",
                     type:"GET",
                     success:function(jsonurl_rain){
+                        $.ajax({
+                            url:"rainDB.php",
+                            type:"post",
+                            data:{"jsonurl_rain":jsonurl_rain},
+                            success:function(){
+                                document.location.href="rainDB.php";
+                            },
+                            error:function(){
+                                alert("Error");
+                            }
+                        });
                         var location=jsonurl_rain["records"]["location"];
                         var weather_test=location[0]["weatherElement"];
                         var parameter_test=location[0]["parameter"];
@@ -147,9 +158,9 @@
                         var arr_i=0;
                         for(let i=0;i<location.length;i++){
                             if(location[i]["parameter"][0]["parameterValue"]==locationName){
-                                $("#Observatory").append(
-                                    $('<option></option>').html(location[i]["locationName"]).val(location[i]["locationName"])
-                                );
+                                // $("#Observatory").append(
+                                //     $('<option></option>').html(location[i]["locationName"]).val(location[i]["locationName"])
+                                // );
                                 location_obs[arr_i++]=location[i];
                             }
                         }
